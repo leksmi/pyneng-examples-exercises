@@ -12,9 +12,15 @@ VLANа или списка VLANов:
 То есть эту задачу можно решить без использования условия if и циклов for/while.
 """
 
+mode = input('Введите режим работы интерфейса (access/trunk): ')
+intf = input('Введите тип и номер интерфейса: ')
+selector = {'access': 'Введите номер VLAN: ',
+            'trunk': 'Введите разрешенные VLANы: '}
+vlans = input(selector[mode])
+
 access_template = [
     "switchport mode access",
-    "switchport access vlan {}",
+    f"switchport access vlan {vlans}",
     "switchport nonegotiate",
     "spanning-tree portfast",
     "spanning-tree bpduguard enable",
@@ -23,5 +29,9 @@ access_template = [
 trunk_template = [
     "switchport trunk encapsulation dot1q",
     "switchport mode trunk",
-    "switchport trunk allowed vlan {}",
+    f"switchport trunk allowed vlan {vlans}",
 ]
+
+templates = {'access': access_template, 'trunk': trunk_template}
+config = [f'interface {intf}', ] + templates[mode]
+print(*config, sep='\n')
