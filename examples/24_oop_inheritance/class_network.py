@@ -40,6 +40,6 @@ class Network:
         print("Вызываю __len__")
         return len(self.hosts)
 
-    def __getitem__(self, index):
-        print(f"Вызываю __getitem__ index {index}")
-        return self.hosts[index]
+    def __getitem__(self, item):
+        print(f"Вызываю __getitem__ index {item}")
+        return self.hosts[item]

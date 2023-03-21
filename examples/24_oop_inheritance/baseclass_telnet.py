@@ -56,13 +56,17 @@ class BaseTelnet:
     def _close(self):
         self._telnet.close()
 
-    def __enter__(self):
+    def __enter__(self) -> 'BaseTelnet':
         """
         The Class is going to work with context manager.
+        Establish a session using a Context Manager.
         """
         print('__enter__ works:')
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        """
+        Gracefully close connection on Context Manager exit.
+        """
         print('__exit__ works:')
         self._close()
