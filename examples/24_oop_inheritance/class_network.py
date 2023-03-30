@@ -29,17 +29,17 @@ class Network:
             )
 
     def __str__(self):
-        print("Вызываю __str__")
+        print("Вызываю Network __str__")
         return f"{self.network}/{self.mask}"
 
     def __repr__(self):
-        print("Вызываю __repr__")
+        print("Вызываю Network __repr__")
         return f"Network('{self.network}', {self.mask})"
 
     def __len__(self):
-        print("Вызываю __len__")
+        print("Вызываю Network __len__")
         return len(self.hosts)
 
     def __getitem__(self, item):
-        print(f"Вызываю __getitem__ index {item}")
+        print(f"Вызываю Network __getitem__ index {item}")
         return self.hosts[item]
