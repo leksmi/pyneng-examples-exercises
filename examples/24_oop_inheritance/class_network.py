@@ -4,7 +4,7 @@ import ipaddress
 class Network:
     all_allocated_ip = []
 
-    def __init__(self, network, mask):
+    def __init__(self, network: str, mask: int):
         self.network = network
         self.mask = mask
         self.allocated = []
