@@ -48,6 +48,7 @@ access_config_2 и убедиться, что в итоговом списке �
 
 """
 
+
 access_mode_template = [
     "switchport mode access",
     "switchport access vlan",
@@ -65,13 +66,20 @@ access_config_2 = {
 }
 
 
-def generate_access_config(intf_vlan_mapping, access_template):
+def generate_access_config(intf_vlan_mapping: dict, access_template: list) -> list:
     """
-    intf_vlan_mapping - словарь с соответствием интерфейс-VLAN такого вида:
+    intf_vlan_mapping: словарь с соответствием интерфейс-VLAN такого вида:
         {'FastEthernet0/12':10,
          'FastEthernet0/14':11,
          'FastEthernet0/16':17}
-    access_template - список команд для порта в режиме access
+    access_template: список команд для порта в режиме access
 
     Возвращает список всех портов в режиме access с конфигурацией на основе шаблона
+    :return list
     """
+    interfaces_config = []
+    for intf_name in intf_vlan_mapping:
+        interfaces_config.append(f"interface {intf_name}")
+        access_template[1] = f"switchport access vlan {intf_vlan_mapping[intf_name]}"
+        interfaces_config.extend(access_template)
+    return interfaces_config
