@@ -52,6 +52,48 @@ In [13]: t.delete_link(('R5', 'Eth0/0'), ('R3', 'Eth0/2'))
 
 """
 
+import copy
+from pprint import pprint
+
+
+class Topology:
+    """
+    :param: raw_topology network topology with doubles
+    """
+
+    def __init__(self, raw_topology: dict) -> None:
+        self.topology: dict = self._normalize(raw_topology)
+
+    def _normalize(self, in_topology: dict) -> dict:
+        """
+        Delete doubles
+        """
+        cleared_topology = copy.deepcopy(in_topology)
+        for key in in_topology:
+            if key in cleared_topology.values():
+                del cleared_topology[key]
+        return cleared_topology
+
+    def delete_link(self, link_a: tuple, link_b: tuple) -> None:
+        """
+        Delete links from self.topology
+        """
+        # for key, value in self.topology.items():
+            # print(f"Key: {key} Value: {value}")
+        # print(f'Looking for: {link_a}: {self.topology.get(link_a)}')
+        # print(f'Looking for: {link_b}: {self.topology.get(link_b)}')
+        if self.topology.get(link_a) == link_b:
+            print(f'It is going to be deleted: {link_a} <-> {self.topology[link_a]}')
+            del self.topology[link_a]
+        elif self.topology.get(link_b) == link_a:
+            print(f'It is going to be deleted: {link_b} <-> {self.topology[link_b]}')
+            del self.topology[link_b]
+        else:
+            print(f'There are no links with: {link_a} <-> {link_b} and vice versa.')
+
+
+
+
 topology_example = {
     ("R1", "Eth0/0"): ("SW1", "Eth0/1"),
     ("R2", "Eth0/0"): ("SW1", "Eth0/2"),
@@ -63,3 +105,16 @@ topology_example = {
     ("SW1", "Eth0/2"): ("R2", "Eth0/0"),
     ("SW1", "Eth0/3"): ("R3", "Eth0/0"),
 }
+
+t = Topology(topology_example)
+pprint(t.topology)
+print('\n')
+t.delete_link(('R3', 'Eth0/1'), ('R4', 'Eth0/0'))
+print('\nNow:')
+pprint(t.topology)
+t.delete_link(('R5', 'Eth0/0'), ('R3', 'Eth0/2'))
+print('\nNow:')
+pprint(t.topology)
+t.delete_link(('R5', 'Eth0/0'), ('R3', 'Eth0/2'))
+print('\nNow:')
+pprint(t.topology)
