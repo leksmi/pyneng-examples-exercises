@@ -51,10 +51,13 @@ from pprint import pprint
 
 class Topology:
     """
-    :param: raw_topology network topology with doubles
+    To do different manipulates with network topology
     """
-
     def __init__(self, raw_topology: dict) -> None:
+        """
+        :param raw_topology: network topology with doubles
+        :type  raw_topology: dict
+        """
         self.raw_topology = raw_topology
         self.topology: dict = self._normalize(raw_topology)
 
